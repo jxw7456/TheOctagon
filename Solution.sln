@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{BC5B72CA-5A17-4F4A-9BC0-E4A9BFD5CD2B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicX", "BasicX\BasicX.vcxproj", "{E745E25C-0143-42AC-A486-1395A4C972AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{F9F0C591-5A07-4603-839A-48B49DFA55C3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TheOctagon", "TheOctagon\TheOctagon.vcxproj", "{08A11DA8-4582-4AE0-90FE-929F44487E65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E745E25C-0143-42AC-A486-1395A4C972AE}.Debug|x86.ActiveCfg = Debug|Win32
+		{E745E25C-0143-42AC-A486-1395A4C972AE}.Debug|x86.Build.0 = Debug|Win32
+		{E745E25C-0143-42AC-A486-1395A4C972AE}.Release|x86.ActiveCfg = Release|Win32
+		{E745E25C-0143-42AC-A486-1395A4C972AE}.Release|x86.Build.0 = Release|Win32
+		{08A11DA8-4582-4AE0-90FE-929F44487E65}.Debug|x86.ActiveCfg = Debug|Win32
+		{08A11DA8-4582-4AE0-90FE-929F44487E65}.Debug|x86.Build.0 = Debug|Win32
+		{08A11DA8-4582-4AE0-90FE-929F44487E65}.Release|x86.ActiveCfg = Release|Win32
+		{08A11DA8-4582-4AE0-90FE-929F44487E65}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E745E25C-0143-42AC-A486-1395A4C972AE} = {BC5B72CA-5A17-4F4A-9BC0-E4A9BFD5CD2B}
+		{08A11DA8-4582-4AE0-90FE-929F44487E65} = {F9F0C591-5A07-4603-839A-48B49DFA55C3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB03C0C3-8F14-4422-9973-15CA22524188}
+	EndGlobalSection
+EndGlobal
