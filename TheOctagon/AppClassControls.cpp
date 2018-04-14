@@ -1,4 +1,6 @@
 #include "AppClass.h"
+#include <Windows.h>
+#include <mmsystem.h>
 using namespace Simplex;
 //Mouse
 void Application::ProcessMouseMovement(sf::Event a_event)
@@ -19,6 +21,10 @@ void Application::ProcessMousePressed(sf::Event a_event)
 	default: break;
 	case sf::Mouse::Button::Left:
 		gui.m_bMousePressed[0] = true;
+		//TODO: get explosion sound effect working
+		//PlaySound(TEXT("explode.wav"), NULL, SND_SYNC);
+		m_pCamera->ResetCamera();
+		
 		break;
 	case sf::Mouse::Button::Middle:
 		gui.m_bMousePressed[1] = true;
@@ -92,7 +98,7 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		m_pCamera->SetPerspective();
 		m_pCamera->CalculateProjectionMatrix();
 		break;
-	case sf::Keyboard::F2:
+	case sf::Keyboard::F2: // Orthographic
 		m_pCamera->SetPerspective(false);
 		m_pCamera->CalculateProjectionMatrix();
 		break;
@@ -381,7 +387,7 @@ void Application::ProcessKeyboard(void)
 	for discreet on/off use ProcessKeyboardPressed/Released
 	*/
 #pragma region Camera Position
-	float fSpeed = 0.1f;
+	float fSpeed = 0.5f;
 	float fMultiplier = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::RShift);
 

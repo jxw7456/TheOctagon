@@ -1,4 +1,13 @@
-﻿  AppClass.cpp
+﻿  MyCamera.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  MyMeshManager.cpp
+  MyMesh.cpp
+  Main.cpp
+  AppClassMain.cpp
+  AppClassGUI.cpp
+  AppClassControls.cpp
+  AppClass.cpp
   TheOctagon.vcxproj -> D:\Profiles\jxw7456\Octagon\Z_DELETE\TheOctagon_d.exe
   D:\Profiles\jxw7456\Octagon\include\Simplex\Shaders\Basic-Instanced.vs
   D:\Profiles\jxw7456\Octagon\include\Simplex\Shaders\Basic.fs

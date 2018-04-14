@@ -13,7 +13,6 @@ void Application::InitVariables(void)
 
 	//init the camera
 	m_pCamera = new MyCamera();
-	m_pCamera->SetPerspective(false); // False is Orthographic
 	m_pCamera->SetPositionTargetAndUp(
 			vector3(0.0f, 45.0f, 20.0f), //Where my eyes are
 			vector3(0.0f, 10.0f, 20.0f), //where what I'm looking at is
