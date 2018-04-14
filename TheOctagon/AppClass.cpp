@@ -11,17 +11,16 @@ void Application::InitVariables(void)
 	// (Pos: [0, 0, 10], Target: [0, 0, 0] and Up: positive Y axis)
 	m_pCameraMngr->SetPositionTargetAndUp(AXIS_Z * 10.0f, ZERO_V3, AXIS_Y);
 
-	// Init the camera
+	//init the camera
 	m_pCamera = new MyCamera();
-	m_pCamera->SetPerspective(false); // False is Orthographic
 	m_pCamera->SetPositionTargetAndUp(
-		vector3(0.0, 45.0f, 20.0f), // Position: Where are we?
-		vector3(0.0, 20.0f, 20.0f), // Target: Where are we looking?
-		AXIS_Y);					// Up: What is up?
+			vector3(0.0f, 45.0f, 20.0f), //Where my eyes are
+			vector3(0.0f, 10.0f, 20.0f), //where what I'm looking at is
+			AXIS_Y);					//what is up
 
-	// Get the singleton
+	//Get the singleton
 	m_pMyMeshMngr = MyMeshManager::GetInstance();
-	m_pMyMeshMngr->SetCamera(m_pCamera);	
+	m_pMyMeshMngr->SetCamera(m_pCamera);
 }
 void Application::Update(void)
 {
