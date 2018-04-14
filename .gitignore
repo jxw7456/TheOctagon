@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+.vs/Solution/v15/Solution.VC.db
+.vs/Solution/v15/Browse.VC.opendb
+.vs/Solution/v15/Browse.VC.db
+.vs/Solution/v15/Solution.VC.db-wal
+.vs/Solution/v15/Solution.VC.db-shm
