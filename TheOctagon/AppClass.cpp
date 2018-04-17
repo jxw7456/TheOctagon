@@ -11,26 +11,26 @@ void Application::InitVariables(void)
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
 #ifdef DEBUG
-	uint uInstances = 900;
+	uint uInstances = 10; //number of cubes genereated
 #else
-	uint uInstances = 1849;
+	//uint uInstances = 1849;
 #endif
-	int nSquare = static_cast<int>(std::sqrt(uInstances));
-	m_uObjects = nSquare * nSquare;
-	uint uIndex = -1;
+	int nSquare = uInstances;//static_cast<int>(std::sqrt(uInstances));
+	m_uObjects = nSquare; //* nSquare;
+	//uint uIndex = -1;
 	for (int i = 0; i < nSquare; i++)
 	{
-		for (int j = 0; j < nSquare; j++)
-		{
-			uIndex++;
-			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-			vector3 v3Position = vector3(glm::sphericalRand(34.0f));
+		//for (int j = 0; j < nSquare; j++)
+		//{
+			//uIndex++;
+			m_pEntityMngr->AddEntity("FinalProject\\model.obj");
+			vector3 v3Position = vector3(glm::sphericalRand(10.0f));
 			matrix4 m4Position = glm::translate(v3Position);
 			m_pEntityMngr->SetModelMatrix(m4Position);
-		}
+		//}
 	}
-	m_uOctantLevels = 1;
-	m_pEntityMngr->Update();
+	//m_uOctantLevels = 1;
+	//m_pEntityMngr->Update();
 }
 void Application::Update(void)
 {
