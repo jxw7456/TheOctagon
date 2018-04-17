@@ -25,6 +25,7 @@ void Application::DrawGUI(void)
 	NewFrame();
 
 	static ImVec4 v4Color = ImColor(255, 0, 0);
+	static ImVec4 v4Color2 = ImColor(0, 255, 0);
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
 	//Main Window
 	if (m_bGUI_Main)
@@ -34,7 +35,8 @@ void Application::DrawGUI(void)
 		String sAbout = m_pSystem->GetAppName() + " - About";
 		ImGui::Begin(sAbout.c_str(), (bool*)0, window_flags);
 		{
-			ImGui::Text("Programmer: \n");
+			ImGui::TextColored(v4Color2, "Team Just A Joke");
+			ImGui::Text("Programmers: \n");
 			ImGui::TextColored(v4Color, m_sProgrammer1.c_str());
 			ImGui::TextColored(v4Color, m_sProgrammer2.c_str());
 			ImGui::TextColored(v4Color, m_sProgrammer3.c_str());

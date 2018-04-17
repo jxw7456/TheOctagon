@@ -3,18 +3,24 @@ using namespace Simplex;
 void Application::InitVariables(void)
 {
 	//Set the position and target of the camera
+	/*
 	m_pCameraMngr->SetPositionTargetAndUp(
 		vector3(0.0f, 0.0f, 100.0f), //Position
 		vector3(0.0f, 0.0f, 99.0f),	//Target
 		AXIS_Y);					//Up
+	*/
+
+	//Sets Camera at the Y Perspective
+	m_pCameraMngr->SetCameraMode(CAM_ORTHO_Y);
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
 #ifdef DEBUG
-	uint uInstances = 900;
+	uint uInstances = 9;
 #else
-	uint uInstances = 1849;
+	uint uInstances = 16;
 #endif
+	float spaceCounter = -8.0f; // Manipulate the position of each object
 	int nSquare = static_cast<int>(std::sqrt(uInstances));
 	m_uObjects = nSquare * nSquare;
 	uint uIndex = -1;
@@ -24,9 +30,10 @@ void Application::InitVariables(void)
 		{
 			uIndex++;
 			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-			vector3 v3Position = vector3(glm::sphericalRand(34.0f));
+			vector3 v3Position = vector3(spaceCounter, 0.0f, 0.0f);
 			matrix4 m4Position = glm::translate(v3Position);
 			m_pEntityMngr->SetModelMatrix(m4Position);
+			spaceCounter += 2.0f;
 		}
 	}
 	m_uOctantLevels = 1;
