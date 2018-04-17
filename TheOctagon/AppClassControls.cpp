@@ -1,4 +1,6 @@
 #include "AppClass.h"
+#include <Windows.h>
+#include <mmsystem.h>
 using namespace Simplex;
 //Mouse
 void Application::ProcessMouseMovement(sf::Event a_event)
@@ -19,6 +21,8 @@ void Application::ProcessMousePressed(sf::Event a_event)
 	default: break;
 	case sf::Mouse::Button::Left:
 		gui.m_bMousePressed[0] = true;
+		//TODO: get explosion sound effect working
+		//PlaySound(TEXT("explode.wav"), NULL, SND_SYNC);
 		break;
 	case sf::Mouse::Button::Middle:
 		gui.m_bMousePressed[1] = true;
@@ -63,6 +67,7 @@ void Application::ProcessMouseScroll(sf::Event a_event)
 
 	if (fMultiplier)
 		fSpeed *= 2.0f;
+	m_pCameraMngr->MoveForward(-fSpeed);
 }
 //Keyboard
 void Application::ProcessKeyPressed(sf::Event a_event)
@@ -71,8 +76,14 @@ void Application::ProcessKeyPressed(sf::Event a_event)
 	{
 	default: break;
 	case sf::Keyboard::Space:
+		m_sound.play();
+		break;
+	case sf::Keyboard::LShift:
+	case sf::Keyboard::RShift:
+		m_bModifier = true;
 		break;
 	}
+	
 	//gui
 	gui.io.KeysDown[a_event.key.code] = true;
 	gui.io.KeyCtrl = a_event.key.control;
@@ -89,39 +100,60 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		m_bRunning = false;
 		break;
 	case sf::Keyboard::F1:
-		m_pCamera->SetPerspective();
-		m_pCamera->CalculateProjectionMatrix();
+		m_pCameraMngr->SetCameraMode(CAM_PERSP);
 		break;
 	case sf::Keyboard::F2:
-		m_pCamera->SetPerspective(false);
-		m_pCamera->CalculateProjectionMatrix();
+		m_pCameraMngr->SetCameraMode(CAM_ORTHO_Z);
+		break;
+	case sf::Keyboard::F3:
+		m_pCameraMngr->SetCameraMode(CAM_ORTHO_Y);
+		break;
+	case sf::Keyboard::F4:
+		m_pCameraMngr->SetCameraMode(CAM_ORTHO_X);
+		break;
+	case sf::Keyboard::F:
+		bFPSControl = !bFPSControl;
+		m_pCameraMngr->SetFPS(bFPSControl);
+		break;
+	case sf::Keyboard::PageUp:
+		++m_uOctantID;
+		/*
+		if (m_uOctantID >= m_pRoot->GetOctantCount())
+			m_uOctantID = - 1;
+		*/
+		break;
+	case sf::Keyboard::PageDown:
+		--m_uOctantID;
+		/*
+		if (m_uOctantID >= m_pRoot->GetOctantCount())
+			m_uOctantID = - 1;
+		*/
 		break;
 	case sf::Keyboard::Add:
-		++m_uActCont;
-		m_uActCont %= 8;
-		if (m_uControllerCount > 0)
+		if (m_uOctantLevels < 4)
 		{
-			while (m_pController[m_uActCont]->uModel == SimplexController_NONE)
-			{
-				++m_uActCont;
-				m_uActCont %= 8;
-			}
+			m_pEntityMngr->ClearDimensionSetAll();
+			++m_uOctantLevels;
+			/*
+			SafeDelete(m_pRoot);
+			m_pRoot = new MyOctant(m_uOctantLevels, 5);
+			*/
 		}
 		break;
 	case sf::Keyboard::Subtract:
-		--m_uActCont;
-		if (m_uActCont > 7)
-			m_uActCont = 7;
-		if (m_uControllerCount > 0)
+		if (m_uOctantLevels > 0)
 		{
-			while (m_pController[m_uActCont]->uModel == SimplexController_NONE)
-			{
-				--m_uActCont;
-				if (m_uActCont > 7)
-					m_uActCont = 7;
-			}
+			m_pEntityMngr->ClearDimensionSetAll();
+			--m_uOctantLevels;
+			/*
+			SafeDelete(m_pRoot);
+			m_pRoot = new MyOctant(m_uOctantLevels, 5);
+			*/
 		}
 		break;
+	case sf::Keyboard::LShift:
+	case sf::Keyboard::RShift:
+		m_bModifier = false;
 	}
 
 	//gui
@@ -137,6 +169,7 @@ void Application::ProcessJoystickConnected(uint nController)
 		return;
 
 	bool bConnected = sf::Joystick::isConnected(nController);
+	m_bGUI_Controller = bConnected;
 	if (bConnected)
 	{
 		SafeDelete(m_pController[nController]);
@@ -369,49 +402,52 @@ void Application::CameraRotation(float a_fSpeed)
 		fAngleX += fDeltaMouse * a_fSpeed;
 	}
 	//Change the Yaw and the Pitch of the camera
-	float sensitivity = 175.0f;
-	m_pCamera->ChangePitchYaw(-fAngleX * sensitivity, fAngleY * sensitivity); // Rotate the Camera faster
+	m_pCameraMngr->ChangeYaw(fAngleY * 3.0f);
+	m_pCameraMngr->ChangePitch(-fAngleX * 3.0f);
 	SetCursorPos(CenterX, CenterY);//Position the mouse in the center
 }
 //Keyboard
 void Application::ProcessKeyboard(void)
 {
+	if (!m_bFocused)
+		return;
 	/*
 	This is used for things that are continuously happening,
 	for discreet on/off use ProcessKeyboardPressed/Released
 	*/
 #pragma region Camera Position
-	float fSpeed = 0.1f;
-	float fMultiplier = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ||
+	bool bMultiplier = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::RShift);
 
-	if (fMultiplier)
-		fSpeed *= 5.0f;
+	float fMultiplier = 1.0f;
+
+	if (bMultiplier)
+		fMultiplier = 5.0f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		m_pCamera->MoveForward(fSpeed);
-	}
+		m_pCameraMngr->MoveForward(m_fMovementSpeed * fMultiplier);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		m_pCamera->MoveForward(-fSpeed);
-	}
+		m_pCameraMngr->MoveForward(-m_fMovementSpeed * fMultiplier);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		m_pCamera->MoveSideways(-fSpeed);
-	}
+		m_pCameraMngr->MoveSideways(-m_fMovementSpeed * fMultiplier);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		m_pCamera->MoveSideways(fSpeed);
-	}
+		m_pCameraMngr->MoveSideways(m_fMovementSpeed * fMultiplier);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		m_pCameraMngr->MoveVertical(-m_fMovementSpeed * fMultiplier);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		m_pCameraMngr->MoveVertical(m_fMovementSpeed * fMultiplier);
 #pragma endregion
 }
 //Joystick
 void Application::ProcessJoystick(void)
 {
+	if (!m_bFocused)
+		return;
 	/*
 	This is used for things that are continuously happening,
 	for discreet on/off use ProcessJoystickPressed/Released
@@ -431,9 +467,15 @@ void Application::ProcessJoystick(void)
 		fHorizontalSpeed *= 3.0f;
 		fVerticalSpeed *= 3.0f;
 	}
+
+	m_pCameraMngr->MoveForward(fForwardSpeed);
+	m_pCameraMngr->MoveSideways(fHorizontalSpeed);
+	m_pCameraMngr->MoveVertical(fVerticalSpeed);
 #pragma endregion
 #pragma region Camera Orientation
 	//Change the Yaw and the Pitch of the camera
+	m_pCameraMngr->ChangeYaw(-m_pController[m_uActCont]->axis[SimplexAxis_U] / 150.0f);
+	m_pCameraMngr->ChangePitch(m_pController[m_uActCont]->axis[SimplexAxis_V] / 150.0f);
 #pragma endregion
 #pragma region ModelOrientation Orientation
 	m_qArcBall = quaternion(vector3(glm::radians(m_pController[m_uActCont]->axis[SimplexAxis_POVY] / 20.0f), 0.0f, 0.0f)) * m_qArcBall;

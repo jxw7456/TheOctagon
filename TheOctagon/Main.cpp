@@ -1,5 +1,6 @@
 // Include standard headers
 #include "Main.h"
+
 int main(void)
 {
 	using namespace Simplex;

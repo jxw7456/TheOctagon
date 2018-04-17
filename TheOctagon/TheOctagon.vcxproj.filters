@@ -45,13 +45,10 @@
     <ClCompile Include="ControllerConfiguration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyMesh.cpp">
+    <ClCompile Include="MyEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyMeshManager.cpp">
+    <ClCompile Include="MyEntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyRigidBody.cpp">
@@ -83,16 +80,13 @@
     <ClInclude Include="ControllerConfiguration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Definitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyCamera.h">
+    <ClInclude Include="MyEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyMeshManager.h">
+    <ClInclude Include="MyEntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyRigidBody.h">

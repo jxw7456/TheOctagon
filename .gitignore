@@ -14,7 +14,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -24,7 +23,6 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
@@ -35,3 +33,4 @@
 .vs/Solution/v15/Browse.VC.db
 .vs/Solution/v15/Solution.VC.db-wal
 .vs/Solution/v15/Solution.VC.db-shm
+.vs/
