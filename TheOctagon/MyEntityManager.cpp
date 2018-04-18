@@ -17,6 +17,22 @@ void Simplex::MyEntityManager::Release(void)
 	m_uEntityCount = 0;
 	m_mEntityArray = nullptr;
 }
+void Simplex::MyEntityManager::TriggerExplosion(vector2 mousePosition)
+{
+	vector3 position = vector3(mousePosition.x, 0, mousePosition.y);
+	for (int i = 0; i < m_uEntityCount; i++) {
+		MyRigidBody* entityRB = m_mEntityArray[i]->GetRigidBody();
+		vector3 entityPosition = entityRB->GetCenterGlobal();
+		vector3 diff = entityPosition - position;
+		vector3 trajectoryVector = entityPosition + diff;
+		std::cout << trajectoryVector.x << "," << trajectoryVector.y << " " << trajectoryVector.z << std::endl;
+		matrix4 m4Position = glm::translate(entityPosition + diff);
+		SetModelMatrix(m4Position);
+	}
+}
+
+
+
 Simplex::MyEntityManager* Simplex::MyEntityManager::GetInstance()
 {
 	if(m_pInstance == nullptr)

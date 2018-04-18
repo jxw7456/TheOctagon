@@ -21,7 +21,8 @@ void Application::ProcessMousePressed(sf::Event a_event)
 	default: break;
 	case sf::Mouse::Button::Left:
 		gui.m_bMousePressed[0] = true;
-		//TODO: get explosion sound effect working
+		vector4 worldMouse4 = vector4(m_v3Mouse.x, m_v3Mouse.y, m_v3Mouse.z, 1);
+		m_pEntityMngr->TriggerExplosion(vector2(m_v3Mouse.x,m_v3Mouse.y));
 		//PlaySound(TEXT("explode.wav"), NULL, SND_SYNC);
 		break;
 	case sf::Mouse::Button::Middle:
