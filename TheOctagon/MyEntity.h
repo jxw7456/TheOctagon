@@ -1,6 +1,6 @@
 /*----------------------------------------------
-Programmer: Alberto Bobadilla (labigm@gmail.com)
-Date: 2017/07
+Programmer: Anna Rosenberg (anr6921@gmail.com)
+Programmer: JaJuan Webster (jxw7456@gmail.com)
 ----------------------------------------------*/
 #ifndef __MYENTITY_H_
 #define __MYENTITY_H_
@@ -28,7 +28,16 @@ class MyEntity
 
 	static std::map<String, MyEntity*> m_IDMap; //a map of the unique ID's
 
+	// values for physics movement
+	vector3 velocity;
+	vector3* acceleration;
+	uint mass;
+
+
+
 public:
+	void SetPhysics(vector3 &otherVelocity); //set entities velocity
+	void ApplyMovement(); // apply physics calculated in setphysics to entity
 	/*
 	Usage: Constructor that specifies the name attached to the MyEntity
 	Arguments:
