@@ -17,6 +17,19 @@ MyRigidBody* Simplex::MyEntity::GetRigidBody(void){	return m_pRigidBody; }
 bool Simplex::MyEntity::IsInitialized(void){ return m_bInMemory; }
 String Simplex::MyEntity::GetUniqueID(void) { return m_sUniqueID; }
 void Simplex::MyEntity::SetAxisVisible(bool a_bSetAxis) { m_bSetAxis = a_bSetAxis; }
+
+// Method to add physics to entity --Anna
+void Simplex::MyEntity::SetPhysics(vector3 &otherVelocity)
+{
+	velocity += otherVelocity;
+}
+
+// Method to apply physics to entity --Anna
+void Simplex::MyEntity::ApplyMovement()
+{
+	m_m4ToWorld = glm::translate(velocity); // move the associated model martix by velocity
+}
+
 //  MyEntity
 void Simplex::MyEntity::Init(void)
 {
