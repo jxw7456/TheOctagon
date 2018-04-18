@@ -23,7 +23,7 @@ void Application::ProcessMousePressed(sf::Event a_event)
 		gui.m_bMousePressed[0] = true;
 		//TODO: get explosion sound effect working
 		//PlaySound(TEXT("explode.wav"), NULL, SND_SYNC);
-		m_pEntityMngr->TriggerExplosion(vector2(m_v3Mouse.x,m_v3Mouse.y), m_pCameraMngr->GetViewMatrix(), m_pCameraMngr->GetProjectionMatrix());
+		m_pEntityMngr->TriggerExplosion();
 		break;
 	case sf::Mouse::Button::Middle:
 		gui.m_bMousePressed[1] = true;
