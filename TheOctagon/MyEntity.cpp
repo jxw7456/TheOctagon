@@ -33,13 +33,9 @@ void Simplex::MyEntity::ApplyMovement()
 	//speed += acceleration;
 	if (speed > maxAccel)
 		speed = maxAccel;
-<<<<<<< Updated upstream
-	matrix4 m4Position = glm::translate(velocity);
-=======
 	}
 	position += velocity;
 	matrix4 m4Position = glm::translate(position);
->>>>>>> Stashed changes
 	SetModelMatrix(m4Position);
 }
 
