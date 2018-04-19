@@ -59,7 +59,6 @@ void Application::DrawGUI(void)
 			ImGui::Text("	  -: Increment Octree subdivision\n");
 			ImGui::Text("	  +: Decrement Octree subdivision\n");
 			ImGui::Text("	  O: Turn Visual Representation On/Off\n");
-			ImGui::Text("	  Mouse: %d\n", gui.io.MouseClickedPos);
 			ImGui::Separator();
 			ImGui::TextColored(ImColor(255, 255, 0), "The Octagon\n");
 		}

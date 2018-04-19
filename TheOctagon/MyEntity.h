@@ -28,7 +28,7 @@ class MyEntity
 	// values for physics movement
 	vector3 velocity = vector3(0);
 	float acceleration = .05f;
-	float maxAccel = 0.001f;
+	float maxAccel = 0.01f;
 	uint mass;
 	float speed = 0.0f;
 	float friction = 0.05f;
