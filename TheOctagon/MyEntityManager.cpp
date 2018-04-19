@@ -27,8 +27,9 @@ void Simplex::MyEntityManager::TriggerExplosion()
 		vector3 diff = entityPosition - ZERO_V3;
 		vector3 trajectoryVector = entityPosition + diff;
 		std::cout <<"X: "<< trajectoryVector.x << ", Y: " << trajectoryVector.y << ", Z: " << trajectoryVector.z << std::endl;
-		matrix4 m4Position = glm::translate(trajectoryVector);
-		SetModelMatrix(m4Position);
+		//matrix4 m4Position = glm::translate(trajectoryVector);
+		//SetModelMatrix(m4Position);
+		m_mEntityArray[i]->SetPhysics(trajectoryVector);
 	}
 }
 Simplex::MyEntityManager* Simplex::MyEntityManager::GetInstance()
@@ -181,10 +182,11 @@ Simplex::MyEntityManager::~MyEntityManager(){Release();};
 // other methods
 void Simplex::MyEntityManager::Update(void)
 {
-	//Clear all collisions
+	//Clear all collisions and applyMovement()
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
 		m_mEntityArray[i]->ClearCollisionList();
+		m_mEntityArray[i]->ApplyMovement();
 	}
 
 	//check collisions

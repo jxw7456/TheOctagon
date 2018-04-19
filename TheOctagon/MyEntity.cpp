@@ -27,7 +27,10 @@ void Simplex::MyEntity::SetPhysics(vector3 &otherVelocity)
 // Method to apply physics to entity --Anna
 void Simplex::MyEntity::ApplyMovement()
 {
-	m_m4ToWorld = glm::translate(velocity); // move the associated model martix by velocity
+	//m_m4ToWorld = glm::translate(velocity); // move the associated model martix by velocity
+	//SetModelMatrix()
+	matrix4 m4Position = glm::translate(velocity);
+	SetModelMatrix(m4Position);
 }
 
 //  MyEntity
