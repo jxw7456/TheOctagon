@@ -2,14 +2,6 @@
 using namespace Simplex;
 void Application::InitVariables(void)
 {
-	//Set the position and target of the camera
-	/*
-	m_pCameraMngr->SetPositionTargetAndUp(
-		vector3(0.0f, 0.0f, 100.0f), //Position
-		vector3(0.0f, 0.0f, 99.0f),	//Target
-		AXIS_Y);					//Up
-	*/
-
 	//Sets Camera at the Y Perspective
 	m_pCameraMngr->SetCameraMode(CAM_ORTHO_Y);
 
@@ -30,8 +22,9 @@ void Application::InitVariables(void)
 		{
 			uIndex++;
 			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-			m_pEntityMngr->GetEntity(i)->position = vector3(spaceCounter, 0.0f, 0.0f);
-			matrix4 m4Position = glm::translate(m_pEntityMngr->GetEntity(i)->position);
+			vector3 v3Position = vector3(spaceCounter, 0.0f, 0.0f);
+			m_pEntityMngr->GetEntity()->position = v3Position;
+			matrix4 m4Position = glm::translate(m_pEntityMngr->GetEntity()->position);
 			m_pEntityMngr->SetModelMatrix(m4Position);
 			spaceCounter += 2.0f;
 		}

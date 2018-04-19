@@ -21,7 +21,7 @@ void Application::ProcessMousePressed(sf::Event a_event)
 	default: break;
 	case sf::Mouse::Button::Left:
 		gui.m_bMousePressed[0] = true;
-		//TODO: get explosion sound effect working
+		//TODO: get explosion sound effect working -- JaJuan 
 		//PlaySound(TEXT("explode.wav"), NULL, SND_SYNC);
 		break;
 	case sf::Mouse::Button::Middle:
