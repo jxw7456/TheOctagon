@@ -1,4 +1,5 @@
 ﻿  AppClass.cpp
+<<<<<<< Updated upstream
   AppClassControls.cpp
   AppClassGUI.cpp
   AppClassMain.cpp
@@ -3162,4 +3163,33 @@ c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.
   D:\School\DSAII\TheOctagon\include\Simplex\Shaders\Text.fs
   D:\School\DSAII\TheOctagon\include\Simplex\Shaders\Text.vs
   D:\School\DSAII\TheOctagon\include\Simplex\Shaders\Wireframe.fs
+=======
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  MyOctant.cpp
+  MyEntityManager.cpp
+  MyEntity.cpp
+  Main.cpp
+  AppClassMain.cpp
+  AppClassGUI.cpp
+  AppClassControls.cpp
+  TheOctagon.vcxproj -> C:\Users\jkiin\Desktop\DSAII\TheOctagon\Z_DELETE\TheOctagon_d.exe
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Basic-Instanced.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Basic.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Basic.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\BasicColor.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\BasicColor.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Line.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Line.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Minimal.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Minimal.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\MinimalRed.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Simplex.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Simplex.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Skybox.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Skybox.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Text.fs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Text.vs
+  C:\Users\jkiin\Desktop\DSAII\TheOctagon\include\Simplex\Shaders\Wireframe.fs
+>>>>>>> Stashed changes
   17 File(s) copied

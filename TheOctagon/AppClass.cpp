@@ -30,8 +30,8 @@ void Application::InitVariables(void)
 		{
 			uIndex++;
 			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-			vector3 v3Position = vector3(spaceCounter, 0.0f, 0.0f);
-			matrix4 m4Position = glm::translate(v3Position);
+			m_pEntityMngr->GetEntity(i)->position = vector3(spaceCounter, 0.0f, 0.0f);
+			matrix4 m4Position = glm::translate(m_pEntityMngr->GetEntity(i)->position);
 			m_pEntityMngr->SetModelMatrix(m4Position);
 			spaceCounter += 2.0f;
 		}
