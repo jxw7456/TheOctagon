@@ -26,9 +26,12 @@ class MyEntity
 	static std::map<String, MyEntity*> m_IDMap; //a map of the unique ID's
 
 	// values for physics movement
-	vector3 velocity;
-	vector3* acceleration;
+	vector3 velocity = vector3(0);
+	float acceleration = .05f;
+	float maxAccel = 0.001f;
 	uint mass;
+	float speed = 0.0f;
+	float friction = 0.05f;
 
 public:
 

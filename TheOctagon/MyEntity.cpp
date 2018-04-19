@@ -21,7 +21,9 @@ void Simplex::MyEntity::SetAxisVisible(bool a_bSetAxis) { m_bSetAxis = a_bSetAxi
 // Method to add physics to entity --Anna
 void Simplex::MyEntity::SetPhysics(vector3 &otherVelocity)
 {
-	velocity += otherVelocity;
+	speed += acceleration;
+	velocity += glm::normalize(otherVelocity);
+
 }
 
 // Method to apply physics to entity --Anna
@@ -29,6 +31,12 @@ void Simplex::MyEntity::ApplyMovement()
 {
 	//m_m4ToWorld = glm::translate(velocity); // move the associated model martix by velocity
 	//SetModelMatrix()
+	velocity += speed;
+	//velocity *= friction;
+	//speed += acceleration;
+	if (speed > maxAccel) {
+		speed = maxAccel;
+	}
 	matrix4 m4Position = glm::translate(velocity);
 	SetModelMatrix(m4Position);
 }

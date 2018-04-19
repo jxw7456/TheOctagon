@@ -22,11 +22,14 @@ void Simplex::MyEntityManager::TriggerExplosion()
 	//vector3 position = vector3(mousePosition.x, mousePosition.y, 0);
 	for (int i = 0; i < m_uEntityCount; i++) 
 	{
-		MyRigidBody * entityRB = m_mEntityArray[i]->GetRigidBody();
+		MyRigidBody* entityRB = m_mEntityArray[i]->GetRigidBody();
 		vector3 entityPosition = entityRB->GetCenterGlobal();
 		vector3 diff = entityPosition - ZERO_V3;
 		vector3 trajectoryVector = entityPosition + diff;
 		std::cout <<"X: "<< trajectoryVector.x << ", Y: " << trajectoryVector.y << ", Z: " << trajectoryVector.z << std::endl;
+		if (trajectoryVector == vector3(0)) {
+			trajectoryVector = vector3(1);
+		}
 		//matrix4 m4Position = glm::translate(trajectoryVector);
 		//SetModelMatrix(m4Position);
 		m_mEntityArray[i]->SetPhysics(trajectoryVector);
