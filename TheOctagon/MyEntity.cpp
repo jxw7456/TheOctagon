@@ -31,10 +31,12 @@ void Simplex::MyEntity::ApplyMovement()
 	//velocity += speed;
 	velocity *= friction;
 	//speed += acceleration;
-	if (speed > maxAccel)
+	if (speed > maxAccel){
 		speed = maxAccel;
 	}
+
 	position += velocity;
+
 	matrix4 m4Position = glm::translate(position);
 	SetModelMatrix(m4Position);
 }
