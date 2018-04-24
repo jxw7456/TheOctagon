@@ -21,9 +21,11 @@ void Application::InitVariables(void)
 		for (int j = 0; j < nSquare; j++)
 		{
 			uIndex++;
-			m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+			m_pEntityMngr->AddEntity("Sorted\\IronMan.obj");
 			vector3 v3Position = vector3(spaceCounter, 0.0f, 0.0f);
 			m_pEntityMngr->GetEntity()->position = v3Position;
+			m_pEntityMngr->GetEntity()->GetRigidBody()->SetColorNotColliding(vector3((float)rand() / RAND_MAX));
+			m_pEntityMngr->GetEntity()->tag = "Cube";
 			matrix4 m4Position = glm::translate(m_pEntityMngr->GetEntity()->position);
 			m_pEntityMngr->SetModelMatrix(m4Position);
 			spaceCounter += 2.0f;
@@ -31,33 +33,53 @@ void Application::InitVariables(void)
 	}
 
 	// Cube Barrier
-	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-	vector3 v3Position1 = vector3(-10, 0, 0);
-	m_pEntityMngr->GetEntity()->position = v3Position1;
-	matrix4 m4Position1 = glm::translate(m_pEntityMngr->GetEntity()->position);
-	m4Position1 *= glm::scale(vector3(1.0f, 1.0f, 10.0f));
-	m_pEntityMngr->SetModelMatrix(m4Position1);
+	int numCubes = 300;
+	float radius = 30.0f;
 
-	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-	vector3 v3Position2 = vector3(10, 0, 0);
-	m_pEntityMngr->GetEntity()->position = v3Position2;
-	matrix4 m4Position2 = glm::translate(m_pEntityMngr->GetEntity()->position);
-	m4Position2 *= glm::scale(vector3(1.0f, 1.0f, 10.0f));
-	m_pEntityMngr->SetModelMatrix(m4Position2);
+	for (int i = 0; i < numCubes; i++) {	//Get all of the points on the 2D circle.
+		double angle = 2 * PI * i / numCubes;	//Angle between vertices (based on subdivisions)
+		double x = cosf(angle) * radius;	//Get xPosition
+		double z = sinf(angle) * radius;	//Get zPosition
 
-	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-	vector3 v3Position3 = vector3(0, 0, -5);
-	m_pEntityMngr->GetEntity()->position = v3Position3;
-	matrix4 m4Position3 = glm::translate(m_pEntityMngr->GetEntity()->position);
-	m4Position3 *= glm::scale(vector3(10.0f, 1.0f, 1.0f));
-	m_pEntityMngr->SetModelMatrix(m4Position3);
+		m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+		vector3 tempPosition = vector3(x, 0.0f, z);
+		m_pEntityMngr->GetEntity()->tag = "Wall";
+		m_pEntityMngr->GetEntity()->position = tempPosition;
+		matrix4 tempm4Position = glm::translate(m_pEntityMngr->GetEntity()->position);
+		m_pEntityMngr->SetModelMatrix(tempm4Position);
+	}
 
-	m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
-	vector3 v3Position4 = vector3(0, 0, 5);
-	m_pEntityMngr->GetEntity()->position = v3Position4;
-	matrix4 m4Position4 = glm::translate(m_pEntityMngr->GetEntity()->position);
-	m4Position4 *= glm::scale(vector3(1.0f, 1.0f, 10.0f));
-	m_pEntityMngr->SetModelMatrix(m4Position4);
+	////Left wall
+	//m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+	//m_pEntityMngr->GetEntity()->tag = "Wall";
+	//vector3 v3Position1 = vector3(-10, 0, 0);
+	//m_pEntityMngr->GetEntity()->position = v3Position1;
+	//matrix4 m4Position1 = glm::translate(m_pEntityMngr->GetEntity()->position);
+	//m_pEntityMngr->SetModelMatrix(m4Position1 * glm::scale(vector3(3.0f)));
+
+	////Right wall
+	//m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+	//m_pEntityMngr->GetEntity()->tag = "Wall";
+	//vector3 v3Position2 = vector3(10, 0, 0);
+	//m_pEntityMngr->GetEntity()->position = v3Position2;
+	//matrix4 m4Position2 = glm::translate(m_pEntityMngr->GetEntity()->position);
+	//m_pEntityMngr->SetModelMatrix(m4Position2 * glm::scale(vector3(3.0f)));
+
+	////Top Wall
+	//m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+	//m_pEntityMngr->GetEntity()->tag = "Wall";
+	//vector3 v3Position3 = vector3(0, 0, -10);
+	//m_pEntityMngr->GetEntity()->position = v3Position3;
+	//matrix4 m4Position3 = glm::translate(m_pEntityMngr->GetEntity()->position);
+	//m_pEntityMngr->SetModelMatrix(m4Position3 * glm::scale(vector3(3.0f)));
+
+	////Bottom Wall
+	//m_pEntityMngr->AddEntity("Minecraft\\Cube.obj");
+	//m_pEntityMngr->GetEntity()->tag = "Wall";
+	//vector3 v3Position4 = vector3(0, 0, 10);
+	//m_pEntityMngr->GetEntity()->position = v3Position4;
+	//matrix4 m4Position4 = glm::translate(m_pEntityMngr->GetEntity()->position);
+	//m_pEntityMngr->SetModelMatrix(m4Position4 * glm::scale(vector3(300.0f)));
 
 	m_uOctantLevels = 1;
 	m_pRoot = new MyOctant(m_uOctantLevels, 5);

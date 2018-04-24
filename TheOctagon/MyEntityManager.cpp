@@ -6,6 +6,7 @@ void Simplex::MyEntityManager::Init(void)
 {
 	m_uEntityCount = 0;
 	m_mEntityArray = nullptr;
+	srand((unsigned)time(NULL));
 }
 void Simplex::MyEntityManager::Release(void)
 {
@@ -21,15 +22,18 @@ void Simplex::MyEntityManager::TriggerExplosion()
 {
 	for (int i = 0; i < m_uEntityCount; i++)
 	{
-		MyRigidBody* entityRB = m_mEntityArray[i]->GetRigidBody();
-		vector3 entityPosition = entityRB->GetCenterGlobal();
-		vector3 diff = entityPosition - ZERO_V3;
-		vector3 trajectoryVector = entityPosition + diff;
-		std::cout << "X: " << trajectoryVector.x << ", Y: " << trajectoryVector.y << ", Z: " << trajectoryVector.z << std::endl;
-		if (trajectoryVector == vector3(0))
-			trajectoryVector = vector3(1);
+		if (m_mEntityArray[i]->tag != "Wall") {
+			MyRigidBody* entityRB = m_mEntityArray[i]->GetRigidBody();
+			vector3 entityPosition = entityRB->GetCenterGlobal();
+			vector3 diff = entityPosition - ZERO_V3;
+			vector3 trajectoryVector = entityPosition + diff;
+			trajectoryVector.y = 0.0f;
+			std::cout << "X: " << trajectoryVector.x << ", Y: " << trajectoryVector.y << ", Z: " << trajectoryVector.z << std::endl;
+			if (trajectoryVector == vector3(0))
+				trajectoryVector = vector3(1.0f,0.0f,1.0f);
 
-		m_mEntityArray[i]->SetPhysics(trajectoryVector);
+			m_mEntityArray[i]->SetPhysics(trajectoryVector);
+		}
 	}
 }
 Simplex::MyEntityManager* Simplex::MyEntityManager::GetInstance()
@@ -194,7 +198,33 @@ void Simplex::MyEntityManager::Update(void)
 	{
 		for (uint j = i + 1; j < m_uEntityCount; j++)
 		{
-			m_mEntityArray[i]->IsColliding(m_mEntityArray[j]);
+			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j])) {
+
+				float randomX = (float)rand() / RAND_MAX;
+				float randomY = (float)rand() / RAND_MAX;
+
+				if (m_mEntityArray[i]->tag == "Wall" && m_mEntityArray[j]->tag == "Wall") return;
+				else if (m_mEntityArray[i]->tag == "Wall") {
+					m_mEntityArray[j]->velocity += glm::normalize(ZERO_V3 - m_mEntityArray[j]->position);
+					m_mEntityArray[j]->velocity.y = 0.0f;
+				}
+				else if (m_mEntityArray[j]->tag == "Wall") {
+					m_mEntityArray[i]->velocity += glm::normalize(ZERO_V3 - m_mEntityArray[i]->position);
+					m_mEntityArray[i]->velocity.y = 0.0f;
+				}
+				else {
+					m_mEntityArray[i]->velocity.x += randomX;
+					m_mEntityArray[i]->velocity.z += randomY;
+					m_mEntityArray[j]->velocity.x -= randomX;
+					m_mEntityArray[j]->velocity.z -= randomY;
+					m_mEntityArray[i]->velocity.y = 0.0f;
+					m_mEntityArray[j]->velocity.y = 0.0f;
+				}
+
+				vector3 tempColor = m_mEntityArray[i]->GetRigidBody()->GetColorNotColliding();
+				m_mEntityArray[i]->GetRigidBody()->SetColorNotColliding(m_mEntityArray[j]->GetRigidBody()->GetColorNotColliding());
+				m_mEntityArray[j]->GetRigidBody()->SetColorNotColliding(tempColor);
+			}
 		}
 	}
 }

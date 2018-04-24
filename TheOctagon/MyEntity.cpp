@@ -30,6 +30,11 @@ void Simplex::MyEntity::ApplyMovement()
 {
 	velocity *= friction;
 
+	for (int i = 0; i < 3; i++){
+		if (abs((double)velocity[i]) < 0.01f)
+			velocity[i] = 0.0f;
+	}
+
 	if (speed > maxAccel)
 		speed = maxAccel;
 

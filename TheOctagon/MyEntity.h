@@ -33,7 +33,8 @@ public:
 	float maxAccel = 0.05f;
 	uint mass;
 	float speed = 0.0f;
-	float friction = 0.95f;
+	float friction = 0.98f;
+	std::string tag = "";
 
 	void SetPhysics(vector3 &otherVelocity); //set entities velocity
 	void ApplyMovement(); // apply physics calculated in setphysics to entity
