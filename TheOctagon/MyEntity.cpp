@@ -23,6 +23,8 @@ void Simplex::MyEntity::SetPhysics(vector3 &otherVelocity)
 {
 	speed += acceleration;
 	velocity += glm::normalize(otherVelocity);
+
+	//this->ApplyMovement();
 }
 
 // Method to apply physics to entity --Anna
@@ -41,11 +43,19 @@ void Simplex::MyEntity::ApplyMovement()
 	position += velocity;
 
 	// Checks if any object try to escape the barrier
-	if (position.x < -50.5f || position.x > 50.5f && tag == "Cube")
-		position.x = 0;
+	/*
+	if (position.x < -50.0f || position.x > 50.0f && tag == "Cube")
+		velocity.x *= -1;
 
-	if (position.z < -50.5f || position.z > 50.5f && tag == "Cube")
-		position.z = 0;
+	if (position.z < -50.0f || position.z > 50.0f && tag == "Cube")
+		velocity.z *= -1;
+		*/
+	if ((position.x*position.x) + (position.z*position.z) > 50.0f*50.0f)
+	{
+		velocity.z *= -1;
+		velocity.x *= -1;
+	}
+		
 
 	matrix4 m4Position = glm::translate(position);
 	SetModelMatrix(m4Position);
