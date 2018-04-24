@@ -30,7 +30,7 @@ void Simplex::MyEntity::ApplyMovement()
 {
 	velocity *= friction;
 
-	for (int i = 0; i < 3; i++){
+	for (int i = 0; i < 3; i++) {
 		if (abs((double)velocity[i]) < 0.01f)
 			velocity[i] = 0.0f;
 	}
@@ -39,6 +39,13 @@ void Simplex::MyEntity::ApplyMovement()
 		speed = maxAccel;
 
 	position += velocity;
+
+	// Checks if any object try to escape the barrier
+	if (position.x < -50.5f || position.x > 50.5f && tag == "Cube")
+		position.x = 0;
+
+	if (position.z < -50.5f || position.z > 50.5f && tag == "Cube")
+		position.z = 0;
 
 	matrix4 m4Position = glm::translate(position);
 	SetModelMatrix(m4Position);

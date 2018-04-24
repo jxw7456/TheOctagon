@@ -199,25 +199,28 @@ void Simplex::MyEntityManager::Update(void)
 	{
 		for (uint j = i + 1; j < m_uEntityCount; j++)
 		{
-			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j])) 
+			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j]))
 			{
 				float randomX = ((float)rand() / RAND_MAX) / 2.5f;
 				float randomY = ((float)rand() / RAND_MAX) / 2.5f;
+				vector3 tempColor = C_CYAN;
 
-				if (m_mEntityArray[i]->tag == "Wall" && m_mEntityArray[j]->tag == "Wall") 
+				if (m_mEntityArray[i]->tag == "Wall" && m_mEntityArray[j]->tag == "Wall")
 					return;
-				else if (m_mEntityArray[i]->tag == "Wall")
+				else if (m_mEntityArray[i]->tag == "Wall" && m_mEntityArray[j]->tag == "Cube")
 				{
 					m_mEntityArray[j]->velocity += (glm::normalize(ZERO_V3 - m_mEntityArray[j]->position) / 2.5f);
 					m_mEntityArray[j]->velocity.y = 0.0f;
 				}
-				else if (m_mEntityArray[j]->tag == "Wall") 
+				else if (m_mEntityArray[j]->tag == "Wall" && m_mEntityArray[i]->tag == "Cube")
 				{
+					tempColor = C_ORANGE;
 					m_mEntityArray[i]->velocity += (glm::normalize(ZERO_V3 - m_mEntityArray[i]->position) / 2.5f);
 					m_mEntityArray[i]->velocity.y = 0.0f;
 				}
-				else 
+				else
 				{
+					tempColor = C_GREEN;
 					m_mEntityArray[i]->velocity.x += randomX;
 					m_mEntityArray[i]->velocity.z += randomY;
 					m_mEntityArray[j]->velocity.x -= randomX;
@@ -227,7 +230,6 @@ void Simplex::MyEntityManager::Update(void)
 				}
 
 				// Manipulate the Color of the objects when they collide
-				vector3 tempColor = C_CYAN;
 				m_mEntityArray[i]->GetRigidBody()->SetColorNotColliding(m_mEntityArray[j]->GetRigidBody()->GetColorNotColliding());
 				m_mEntityArray[j]->GetRigidBody()->SetColorNotColliding(tempColor);
 			}
