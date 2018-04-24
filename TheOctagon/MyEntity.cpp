@@ -50,7 +50,7 @@ void Simplex::MyEntity::ApplyMovement()
 	if (position.z < -50.0f || position.z > 50.0f && tag == "Cube")
 		velocity.z *= -1;
 		*/
-	if ((position.x*position.x) + (position.z*position.z) > 50.0f*50.0f)
+	if ((position.x*position.x) + (position.z*position.z) >= (50.0f*50.0f))
 	{
 		velocity.z *= -1;
 		velocity.x *= -1;

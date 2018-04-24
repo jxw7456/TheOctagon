@@ -193,10 +193,10 @@ void Simplex::MyEntityManager::Update(void)
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
 
-		//m_mEntityArray[i]->ClearCollisionList();
 		if (m_mEntityArray[i]->tag != "Wall")
 		{
 			m_mEntityArray[i]->ApplyMovement();
+			m_mEntityArray[i]->ClearCollisionList();
 		}
 	}
 
@@ -228,7 +228,7 @@ void Simplex::MyEntityManager::Update(void)
 					m_mEntityArray[i]->velocity.y = 0.0f;
 				}
 				// else collising with each other
-				else
+				else if (m_mEntityArray[j]->tag == "Cube" && m_mEntityArray[i]->tag == "Cube")
 				{
 					tempColor = C_GREEN;
 					/*
@@ -247,6 +247,7 @@ void Simplex::MyEntityManager::Update(void)
 				//m_mEntityArray[i]->GetRigidBody()->SetColorNotColliding(m_mEntityArray[j]->GetRigidBody()->GetColorNotColliding());
 				//m_mEntityArray[j]->GetRigidBody()->SetColorNotColliding(tempColor);
 			}
+			//m_mEntityArray[j]->ClearCollisionList();
 		}
 	}
 }
