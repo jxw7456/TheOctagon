@@ -4,7 +4,7 @@ void Application::InitVariables(void)
 {
 	// Sets Camera at the Y Perspective
 	m_pCameraMngr->SetCameraMode(CAM_ORTHO_Y);
-	m_pCameraMngr->SetPosition(vector3(0.0f, 30.0f, 0.0f));
+	m_pCameraMngr->SetPosition(vector3(0.0f, 50.0f, 0.0f));
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
