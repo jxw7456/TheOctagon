@@ -25,6 +25,7 @@ void Application::DrawGUI(void)
 	NewFrame();
 
 	static ImVec4 v4Color = ImColor(255, 0, 0);
+	static ImVec4 v4Color2 = ImColor(0, 255, 0);
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
 	//Main Window
 	if (m_bGUI_Main)
@@ -34,14 +35,15 @@ void Application::DrawGUI(void)
 		String sAbout = m_pSystem->GetAppName() + " - About";
 		ImGui::Begin(sAbout.c_str(), (bool*)0, window_flags);
 		{
-			ImGui::Text("Programmer: \n");
+			ImGui::TextColored(v4Color2, "Team Just A Joke");
+			ImGui::Text("Programmers: \n");
 			ImGui::TextColored(v4Color, m_sProgrammer1.c_str());
 			ImGui::TextColored(v4Color, m_sProgrammer2.c_str());
 			ImGui::TextColored(v4Color, m_sProgrammer3.c_str());
 			ImGui::Text("FrameRate: %.2f [FPS] -> %.3f [ms/frame]\n",
 				ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 			ImGui::Text("Levels in Octree: %d\n", m_uOctantLevels);
-			//ImGui::Text("Octants: %d\n", m_pRoot->GetOctantCount());
+			ImGui::Text("Octants: %d\n", m_pRoot->GetOctantCount());
 			ImGui::Text("Objects: %d\n", m_uObjects);
 			ImGui::Separator();
 			ImGui::Text("Control:\n");
@@ -56,8 +58,9 @@ void Application::DrawGUI(void)
 			ImGui::Separator();
 			ImGui::Text("	  -: Increment Octree subdivision\n");
 			ImGui::Text("	  +: Decrement Octree subdivision\n");
+			ImGui::Text("	  O: Turn Visual Representation On/Off\n");
 			ImGui::Separator();
-			ImGui::TextColored(ImColor(255, 255, 0), "Octree\n");
+			ImGui::TextColored(ImColor(255, 255, 0), "The Octagon\n");
 		}
 		ImGui::End();
 	}

@@ -2,7 +2,7 @@
 using namespace Simplex;
 std::map<String, MyEntity*> MyEntity::m_IDMap;
 //  Accessors
-matrix4 Simplex::MyEntity::GetModelMatrix(void){ return m_m4ToWorld; }
+matrix4 Simplex::MyEntity::GetModelMatrix(void) { return m_m4ToWorld; }
 void Simplex::MyEntity::SetModelMatrix(matrix4 a_m4ToWorld)
 {
 	if (!m_bInMemory)
@@ -12,11 +12,33 @@ void Simplex::MyEntity::SetModelMatrix(matrix4 a_m4ToWorld)
 	m_pModel->SetModelMatrix(m_m4ToWorld);
 	m_pRigidBody->SetModelMatrix(m_m4ToWorld);
 }
-Model* Simplex::MyEntity::GetModel(void){return m_pModel;}
-MyRigidBody* Simplex::MyEntity::GetRigidBody(void){	return m_pRigidBody; }
-bool Simplex::MyEntity::IsInitialized(void){ return m_bInMemory; }
+Model* Simplex::MyEntity::GetModel(void) { return m_pModel; }
+MyRigidBody* Simplex::MyEntity::GetRigidBody(void) { return m_pRigidBody; }
+bool Simplex::MyEntity::IsInitialized(void) { return m_bInMemory; }
 String Simplex::MyEntity::GetUniqueID(void) { return m_sUniqueID; }
 void Simplex::MyEntity::SetAxisVisible(bool a_bSetAxis) { m_bSetAxis = a_bSetAxis; }
+
+// Method to add physics to entity --Anna
+void Simplex::MyEntity::SetPhysics(vector3 &otherVelocity)
+{
+	speed += acceleration;
+	velocity += glm::normalize(otherVelocity);
+}
+
+// Method to apply physics to entity --Anna
+void Simplex::MyEntity::ApplyMovement()
+{
+	velocity *= friction;
+
+	if (speed > maxAccel)
+		speed = maxAccel;
+
+	position += velocity;
+
+	matrix4 m4Position = glm::translate(position);
+	SetModelMatrix(m4Position);
+}
+
 //  MyEntity
 void Simplex::MyEntity::Init(void)
 {
@@ -78,18 +100,17 @@ Simplex::MyEntity::MyEntity(MyEntity const& other)
 	m_bInMemory = other.m_bInMemory;
 	m_pModel = other.m_pModel;
 	//generate a new rigid body we do not share the same rigid body as we do the model
-	m_pRigidBody = new MyRigidBody(m_pModel->GetVertexList()); 
+	m_pRigidBody = new MyRigidBody(m_pModel->GetVertexList());
 	m_m4ToWorld = other.m_m4ToWorld;
 	m_pMeshMngr = other.m_pMeshMngr;
 	m_sUniqueID = other.m_sUniqueID;
 	m_bSetAxis = other.m_bSetAxis;
 	m_nDimensionCount = other.m_nDimensionCount;
 	m_DimensionArray = other.m_DimensionArray;
-
 }
 MyEntity& Simplex::MyEntity::operator=(MyEntity const& other)
 {
-	if(this != &other)
+	if (this != &other)
 	{
 		Release();
 		Init();
@@ -98,7 +119,7 @@ MyEntity& Simplex::MyEntity::operator=(MyEntity const& other)
 	}
 	return *this;
 }
-MyEntity::~MyEntity(){Release();}
+MyEntity::~MyEntity() { Release(); }
 //--- Methods
 void Simplex::MyEntity::AddToRenderList(bool a_bDrawRigidBody)
 {
@@ -108,9 +129,9 @@ void Simplex::MyEntity::AddToRenderList(bool a_bDrawRigidBody)
 
 	//draw model
 	m_pModel->AddToRenderList();
-	
+
 	//draw rigid body
-	if(a_bDrawRigidBody)
+	if (a_bDrawRigidBody)
 		m_pRigidBody->AddToRenderList();
 
 	if (m_bSetAxis)
@@ -146,7 +167,7 @@ void Simplex::MyEntity::AddDimension(uint a_uDimension)
 	//insert the entry
 	uint* pTemp;
 	pTemp = new uint[m_nDimensionCount + 1];
-	if(m_DimensionArray)
+	if (m_DimensionArray)
 	{
 		memcpy(pTemp, m_DimensionArray, sizeof(uint) * m_nDimensionCount);
 		delete[] m_DimensionArray;
@@ -176,12 +197,12 @@ void Simplex::MyEntity::RemoveDimension(uint a_uDimension)
 			pTemp = new uint[m_nDimensionCount - 1];
 			if (m_DimensionArray)
 			{
-				memcpy(pTemp, m_DimensionArray, sizeof(uint) * (m_nDimensionCount-1));
+				memcpy(pTemp, m_DimensionArray, sizeof(uint) * (m_nDimensionCount - 1));
 				delete[] m_DimensionArray;
 				m_DimensionArray = nullptr;
 			}
 			m_DimensionArray = pTemp;
-			
+
 			--m_nDimensionCount;
 			SortDimensions();
 			return;
@@ -209,14 +230,13 @@ bool Simplex::MyEntity::IsInDimension(uint a_uDimension)
 }
 bool Simplex::MyEntity::SharesDimension(MyEntity* const a_pOther)
 {
-	
 	//special case: if there are no dimensions on either MyEntity
 	//then they live in the special global dimension
 	if (0 == m_nDimensionCount)
 	{
 		//if no spatial optimization all cases should fall here as every 
 		//entity is by default, under the special global dimension only
-		if(0 == a_pOther->m_nDimensionCount)
+		if (0 == a_pOther->m_nDimensionCount)
 			return true;
 	}
 

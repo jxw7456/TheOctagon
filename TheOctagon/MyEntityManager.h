@@ -1,7 +1,4 @@
-/*----------------------------------------------
-Programmer: Alberto Bobadilla (labigm@gmail.com)
-Date: 2017/07
-----------------------------------------------*/
+
 #ifndef __MYENTITYMANAGER_H_
 #define __MyENTITYMANAGER_H_
 
@@ -18,6 +15,7 @@ class MyEntityManager
 	PEntity* m_mEntityArray = nullptr; //array of MyEntity pointers
 	static MyEntityManager* m_pInstance; // Singleton pointer
 public:
+	void TriggerExplosion();
 	/*
 	Usage: Gets the singleton pointer
 	Arguments: ---

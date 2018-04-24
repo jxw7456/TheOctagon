@@ -17,9 +17,24 @@ void Simplex::MyEntityManager::Release(void)
 	m_uEntityCount = 0;
 	m_mEntityArray = nullptr;
 }
+void Simplex::MyEntityManager::TriggerExplosion()
+{
+	for (int i = 0; i < m_uEntityCount; i++)
+	{
+		MyRigidBody* entityRB = m_mEntityArray[i]->GetRigidBody();
+		vector3 entityPosition = entityRB->GetCenterGlobal();
+		vector3 diff = entityPosition - ZERO_V3;
+		vector3 trajectoryVector = entityPosition + diff;
+		std::cout << "X: " << trajectoryVector.x << ", Y: " << trajectoryVector.y << ", Z: " << trajectoryVector.z << std::endl;
+		if (trajectoryVector == vector3(0))
+			trajectoryVector = vector3(1);
+
+		m_mEntityArray[i]->SetPhysics(trajectoryVector);
+	}
+}
 Simplex::MyEntityManager* Simplex::MyEntityManager::GetInstance()
 {
-	if(m_pInstance == nullptr)
+	if (m_pInstance == nullptr)
 	{
 		m_pInstance = new MyEntityManager();
 	}
@@ -27,7 +42,7 @@ Simplex::MyEntityManager* Simplex::MyEntityManager::GetInstance()
 }
 void Simplex::MyEntityManager::ReleaseInstance()
 {
-	if(m_pInstance != nullptr)
+	if (m_pInstance != nullptr)
 	{
 		delete m_pInstance;
 		m_pInstance = nullptr;
@@ -45,7 +60,7 @@ int Simplex::MyEntityManager::GetEntityIndex(String a_sUniqueID)
 	return -1;
 }
 //Accessors
-Simplex::uint Simplex::MyEntityManager::GetEntityCount(void) {	return m_uEntityCount; }
+Simplex::uint Simplex::MyEntityManager::GetEntityCount(void) { return m_uEntityCount; }
 Simplex::Model* Simplex::MyEntityManager::GetModel(uint a_uIndex)
 {
 	//if the list is empty return
@@ -160,17 +175,18 @@ void Simplex::MyEntityManager::SetModelMatrix(matrix4 a_m4ToWorld, uint a_uIndex
 	m_mEntityArray[a_uIndex]->SetModelMatrix(a_m4ToWorld);
 }
 //The big 3
-Simplex::MyEntityManager::MyEntityManager(){Init();}
-Simplex::MyEntityManager::MyEntityManager(MyEntityManager const& a_pOther){ }
+Simplex::MyEntityManager::MyEntityManager() { Init(); }
+Simplex::MyEntityManager::MyEntityManager(MyEntityManager const& a_pOther) { }
 Simplex::MyEntityManager& Simplex::MyEntityManager::operator=(MyEntityManager const& a_pOther) { return *this; }
-Simplex::MyEntityManager::~MyEntityManager(){Release();};
+Simplex::MyEntityManager::~MyEntityManager() { Release(); };
 // other methods
 void Simplex::MyEntityManager::Update(void)
 {
-	//Clear all collisions
+	//Clear all collisions and applyMovement()
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
 		m_mEntityArray[i]->ClearCollisionList();
+		m_mEntityArray[i]->ApplyMovement();
 	}
 
 	//check collisions
@@ -225,7 +241,7 @@ void Simplex::MyEntityManager::RemoveEntity(uint a_uIndex)
 	{
 		std::swap(m_mEntityArray[a_uIndex], m_mEntityArray[m_uEntityCount - 1]);
 	}
-	
+
 	//and then pop the last one
 	//create a new temp array with one less entry
 	PEntity* tempArray = new PEntity[m_uEntityCount - 1];
