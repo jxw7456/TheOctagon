@@ -22,17 +22,18 @@ void Simplex::MyEntityManager::TriggerExplosion()
 {
 	for (int i = 0; i < m_uEntityCount; i++)
 	{
-		if (m_mEntityArray[i]->tag != "Wall") {
+		if (m_mEntityArray[i]->tag != "Wall")
+		{
 			MyRigidBody* entityRB = m_mEntityArray[i]->GetRigidBody();
 			vector3 entityPosition = entityRB->GetCenterGlobal();
 			vector3 diff = entityPosition - ZERO_V3;
 			vector3 trajectoryVector = entityPosition + diff;
 			trajectoryVector.y = 0.0f;
-			std::cout << "X: " << trajectoryVector.x << ", Y: " << trajectoryVector.y << ", Z: " << trajectoryVector.z << std::endl;
-			if (trajectoryVector == vector3(0))
-				trajectoryVector = vector3(1.0f,0.0f,1.0f);
 
-			m_mEntityArray[i]->SetPhysics(trajectoryVector);
+			if (trajectoryVector == vector3(0))
+				trajectoryVector = vector3(1.0f, 0.0f, 1.0f);
+
+			m_mEntityArray[i]->SetPhysics(trajectoryVector / 2.0f);
 		}
 	}
 }
