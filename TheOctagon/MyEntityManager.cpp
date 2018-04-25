@@ -233,8 +233,8 @@ void Simplex::MyEntityManager::Update(void)
 				}
 
 				// Manipulate the Color of the objects when they collide
-				m_mEntityArray[i]->GetRigidBody()->SetColorNotColliding(m_mEntityArray[j]->GetRigidBody()->GetColorNotColliding());
-				m_mEntityArray[j]->GetRigidBody()->SetColorNotColliding(tempColor);
+				//m_mEntityArray[i]->GetRigidBody()->SetColorNotColliding(m_mEntityArray[j]->GetRigidBody()->GetColorNotColliding());
+				//m_mEntityArray[j]->GetRigidBody()->SetColorNotColliding(tempColor);
 			}
 		}
 	}

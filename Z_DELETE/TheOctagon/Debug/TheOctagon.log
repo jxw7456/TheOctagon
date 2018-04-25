@@ -1,4 +1,4 @@
-﻿  MyEntity.cpp
+﻿  MyEntityManager.cpp
 d:\profiles\jxw7456\octo\include\simplex\system\definitions.h(188): warning C4251: 'Simplex::MeshOptions::m_m4Transform': struct 'glm::detail::tmat4x4<glm::lowp_float>' needs to have dll-interface to be used by clients of struct 'Simplex::MeshOptions'
   d:\profiles\jxw7456\octo\include\glm\core\type_mat4x4.hpp(276): note: see declaration of 'glm::detail::tmat4x4<glm::lowp_float>'
 d:\profiles\jxw7456\octo\include\simplex\system\folder.h(20): warning C4251: 'Simplex::Folder::m_sRoot': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Simplex::Folder'
@@ -1044,6 +1044,7 @@ c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.
           [
               _Ty=Simplex::MyEntity *
           ]
+d:\profiles\jxw7456\octo\theoctagon\myentitymanager.cpp(24): warning C4018: '<': signed/unsigned mismatch
   TheOctagon.vcxproj -> D:\Profiles\jxw7456\Octo\Z_DELETE\TheOctagon_d.exe
   D:\Profiles\jxw7456\Octo\include\Simplex\Shaders\Basic-Instanced.vs
   D:\Profiles\jxw7456\Octo\include\Simplex\Shaders\Basic.fs
