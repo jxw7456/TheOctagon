@@ -4,14 +4,14 @@ void Application::InitVariables(void)
 {
 	// Sets Camera at the Y Perspective
 	m_pCameraMngr->SetCameraMode(CAM_ORTHO_Y);
-	m_pCameraMngr->SetPosition(vector3(0.0f, 50.0f, 0.0f));
+	m_pCameraMngr->SetPosition(vector3(0.0f, 55.0f, 0.0f));
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
 
 #ifdef DEBUG
-	uint uInstances = 16;
+	uint uInstances = 25;
 #else
-	uint uInstances = 16;
+	uint uInstances = 36;
 #endif
 	float radiusObj = 20.0f;
 	float radiusCubes = 50.0f;

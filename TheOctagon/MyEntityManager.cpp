@@ -20,7 +20,7 @@ void Simplex::MyEntityManager::Release(void)
 }
 void Simplex::MyEntityManager::TriggerExplosion()
 {
-	// set up physics for each entity
+	// Set up physics for each entity
 	for (int i = 0; i < m_uEntityCount; i++)
 	{
 		if (m_mEntityArray[i]->tag != "Wall")
@@ -188,11 +188,9 @@ Simplex::MyEntityManager::~MyEntityManager() { Release(); };
 // other methods
 void Simplex::MyEntityManager::Update(void)
 {
-
 	//Clear all collisions and applyMovement()
 	for (uint i = 0; i < m_uEntityCount; i++)
 	{
-
 		if (m_mEntityArray[i]->tag != "Wall")
 		{
 			m_mEntityArray[i]->ApplyMovement();
@@ -203,24 +201,22 @@ void Simplex::MyEntityManager::Update(void)
 	//check collisions
 	for (uint i = 0; i < m_uEntityCount - 1; i++)
 	{
-		for (uint j = i + 1; j < m_uEntityCount-i; j++)
+		for (uint j = i + 1; j < m_uEntityCount - i; j++)
 		{
 			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j]))
 			{
-				//float randomX = ((float)rand() / RAND_MAX) / 2.5f;
-				//float randomY = ((float)rand() / RAND_MAX) / 2.5f;
 				vector3 tempColor = C_CYAN;
 
 				// both are wall entities
 				if (m_mEntityArray[i]->tag == "Wall" && m_mEntityArray[j]->tag == "Wall")
 					return;
-				// i is wall and j is cube
+				// 'i' is wall and 'j' is cube
 				else if (m_mEntityArray[i]->tag == "Wall" && m_mEntityArray[j]->tag == "Cube")
 				{
 					m_mEntityArray[j]->velocity += (glm::normalize(ZERO_V3 - m_mEntityArray[j]->position) / 2.5f);
 					m_mEntityArray[j]->velocity.y = 0.0f;
 				}
-				// j is wall and i is cube
+				// 'j' is wall and 'i' is cube
 				else if (m_mEntityArray[j]->tag == "Wall" && m_mEntityArray[i]->tag == "Cube")
 				{
 					tempColor = C_ORANGE;
@@ -228,26 +224,18 @@ void Simplex::MyEntityManager::Update(void)
 					m_mEntityArray[i]->velocity.y = 0.0f;
 				}
 				// else collising with each other
-				else if (m_mEntityArray[j]->tag == "Cube" && m_mEntityArray[i]->tag == "Cube")
+				else if (m_mEntityArray[i]->tag == "Cube" && m_mEntityArray[j]->tag == "Cube")
 				{
 					tempColor = C_GREEN;
-					/*
-					m_mEntityArray[i]->velocity.x += randomX;
-					m_mEntityArray[i]->velocity.z += randomY;
-					m_mEntityArray[j]->velocity.x -= randomX;
-					m_mEntityArray[j]->velocity.z -= randomY;
-					m_mEntityArray[i]->velocity.y = 0.0f;
-					m_mEntityArray[j]->velocity.y = 0.0f;*/
 					vector3 tempVelocity = m_mEntityArray[i]->velocity;
 					m_mEntityArray[i]->velocity = m_mEntityArray[j]->velocity;
 					m_mEntityArray[j]->velocity = tempVelocity;
 				}
 
 				// Manipulate the Color of the objects when they collide
-				//m_mEntityArray[i]->GetRigidBody()->SetColorNotColliding(m_mEntityArray[j]->GetRigidBody()->GetColorNotColliding());
-				//m_mEntityArray[j]->GetRigidBody()->SetColorNotColliding(tempColor);
+				m_mEntityArray[i]->GetRigidBody()->SetColorNotColliding(m_mEntityArray[j]->GetRigidBody()->GetColorNotColliding());
+				m_mEntityArray[j]->GetRigidBody()->SetColorNotColliding(tempColor);
 			}
-			//m_mEntityArray[j]->ClearCollisionList();
 		}
 	}
 }
